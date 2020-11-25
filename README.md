@@ -1,14 +1,73 @@
-# Project
+# Azure Functions .NET 5 support
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+## How to run the sample
 
-As the maintainer of this project, please make a few updates:
+### Download .NET 5.0
+Download .NET 5.0 rc2 [from here](https://dotnet.microsoft.com/download/dotnet/5.0)
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+### Download the Azure Functions Core Tools
+Please make sure you have Azure Functions Core Tools >= `3.0.2996`.
+
+To download using `npm`, you can run  `npm i -g azure-functions-core-tools@3 --unsafe-perm true`.
+
+For other ways to download, please checkout our docs at [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools)
+
+### Run the sample locally
+- Go to the function app directory - `cd FunctionApp`
+- Run `func host start --csharp` [Optional `--verbose`]. This will preform a build and then run the host.
+
+### Important files in this sample that you shouldn't remove
+- `local.settings.json` - The following two environment variables are required to run it locally. In Azure, these two needs to be set as Application Settings.
+```
+{
+  ...
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet5",
+    "languageWorkers:dotnet5:workerDirectory": "./"
+  }
+  ...
+}
+
+```
+- `NuGet.Config` - The .NET worker packages are published in a MyGet feed, and the following sources need to be present. --
+```
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="nuget.org" value="https://www.nuget.org/api/v2/" />
+    <add key="azure_app_service" value="https://www.myget.org/F/azure-appservice/api/v2" />
+    ...
+  </packageSources>
+</configuration>
+```
+
+- `FunctionApp.csproj` - This has to have at least the following content --
+```
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <AzureFunctionsVersion>v3</AzureFunctionsVersion>
+    <OutputType>Exe</OutputType>
+    <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
+  </PropertyGroup>
+  <ItemGroup>
+    ...
+    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.1.0-preview2" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.SourceGenerator" Version="1.1.0-preview2" OutputItemType="Analyzer" />
+    <PackageReference Include="Microsoft.NET.Sdk.FunctionsWorker" Version="5.0.0-preview1-0002" />>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+</Project>
+```
 
 ## Contributing
 
