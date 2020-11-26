@@ -29,17 +29,17 @@ In the `FunctionApp` folder, create a file named `local.settings.json` and add t
 }
 ```
 
-#### Storage connection string
-
-Some of the functions in the sample require a Storage account. In *local.settingns.json*, insert the connection string to a valid Storage account or running Storage Emulator as the value of `AzureWebJobsStorage`.
+* ``FUNCTIONS_WORKER_RUNTIME` - Set this to a value of `dotnet5`. This may change in the future.
+* `languageWorkers:dotnet5:workerDirectory` - Where the functions host will locate the .NET 5 worker. Set this to `.` (this is the function app root which contains *worker.config.json*)
+* `AzureWebJobsStorage` - Some of the functions in the sample require a Storage account. Set the value of `AzureWebJobsStorage` to the connection string to a valid Storage account or running Storage Emulator.
 
 ### FunctionApp folder structure
 
-Here are the key files in a .NET 5 Azure Functions app.
+Here are the important files in a .NET 5 Azure Functions app.
 
 #### NuGet.Config
 
-During the private preview, the .NET worker packages are published in a MyGet feed, and the following sources need to be present.
+During the private preview, the .NET worker packages are published in a MyGet feed, and the following sources need to be present in *NuGet.config*.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -54,9 +54,11 @@ During the private preview, the .NET worker packages are published in a MyGet fe
 
 ### FunctionApp.csproj
 
+**Important** - Currently, the worker needs to be compiled into a DLL named `FunctionApp.dll`. The simplest way to ensure this happens is to name your project file `FunctionApp.csproj`. This limitation will be removed in a future release.
+
 There are some main differences between a .NET 5 Azure Functions project compared to .NET Core 3.1.
 
-* `TargetFramework` and `OutputType` - A .NET 5 Azure Functions app is a .NET 5 executable (console app) that runs in a separate process from the Azure Functions host.
+* `TargetFramework` and `OutputType` - A .NET 5 Azure Functions app is a .NET 5 executable (console app) that runs in a process that is separate from the Azure Functions host.
 * `AzureFunctionsVersion` - .NET 5 Azure Functions still uses the `v3` Azure Functions host.
 * `_FunctionsSkipCleanOutput` - Ensure this is set to prevent the build process from removing important files in the output.
 
@@ -76,7 +78,7 @@ For functions attributes to work, you also need to reference the appropriate Web
 
 ### Functions
 
-Like .NET Core 3.1 function apps, functions are in C# files. They are currently separated into folders but, like .NET Core 3.1 functions, they can be organized differently.
+Like .NET Core 3.1 function apps, functions are in C# files. They are currently separated into folders but, like .NET Core 3.1 functions, they can be organized differently if you wish.
 
 One important difference with .NET 5 functions is that "rich bindings", such as binding to a Cosmos DB client, are not supported. Use strings and C# objects (POCOs). For HTTP, use `HttpRequestData` and `HttpResponseData` objects.
 
@@ -87,8 +89,19 @@ One important difference with .NET 5 functions is that "rich bindings", such as 
 * `Function5` - An HTTP triggered function that demonstrates dependency instruction.
 
 ### Run the sample locally
+
 - Go to the function app directory - `cd FunctionApp`
 - Run `func host start --csharp` [Optional `--verbose`]. This will preform a build and then run the host.
+
+### Attaching the debugger
+
+#### VS Code
+
+In the "Run" icon in the Activity Bar. The `.NET Core Attach` launch task should be selected. **With the function app running**, start the `.NET Core Attach` task. It will prompt you for a process to attach to. Select the `dotnet` process running `FunctionApp.dll`.
+
+#### Visual Studio
+
+To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Program.cs*. The process will attempt to launch a debugger before continuing.
 
 ## Contributing
 
