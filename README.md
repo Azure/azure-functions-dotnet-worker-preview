@@ -85,7 +85,7 @@ One important difference with .NET 5 functions is that "rich bindings", such as 
 * `Function2` - A Queue trigger with a Blob input.
 * `Function3` - An HTTP trigger with a Queue output.
 * `Function4` - A simple HTTP trigger.
-* `Function5` - An HTTP triggered function that demonstrates dependency instruction.
+* `Function5` - An HTTP triggered function that demonstrates dependency injection.
 
 ### Run the sample locally
 
@@ -161,6 +161,10 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
 
 
 -->
+
+## Feedback
+
+Please create issues in this repo. Thanks!
 
 ## Contributing
 
