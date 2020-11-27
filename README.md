@@ -2,10 +2,10 @@
 
 ## How to run the sample
 
-### Download .NET 5.0
+### Install .NET 5.0
 Download .NET 5.0 [from here](https://dotnet.microsoft.com/download/dotnet/5.0)
 
-### Download the Azure Functions Core Tools
+### Install the Azure Functions Core Tools
 Please make sure you have Azure Functions Core Tools >= `3.0.2996`.
 
 To download using `npm`, you can run  `npm i -g azure-functions-core-tools@3 --unsafe-perm true`.
