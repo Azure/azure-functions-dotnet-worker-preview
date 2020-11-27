@@ -29,13 +29,13 @@ In the `FunctionApp` folder, create a file named `local.settings.json` and add t
 }
 ```
 
-* ``FUNCTIONS_WORKER_RUNTIME` - Set this to a value of `dotnet5`. This may change in the future.
-* `languageWorkers:dotnet5:workerDirectory` - Where the functions host will locate the .NET 5 worker. Set this to `.` (this is the function app root which contains *worker.config.json*)
+* `FUNCTIONS_WORKER_RUNTIME` - Set this to a value of `dotnet5`. This is likely to change in the future as this worker is intended for future .NET versions as well.
+* `languageWorkers:dotnet5:workerDirectory` - Where the functions host will locate the .NET 5 worker. Set this to `.` (this will be the function app root)
 * `AzureWebJobsStorage` - Some of the functions in the sample require a Storage account. Set the value of `AzureWebJobsStorage` to the connection string to a valid Storage account or running Storage Emulator.
 
 ### FunctionApp folder structure
 
-Here are the important files in a .NET 5 Azure Functions app.
+Here are the important artifacts in a .NET 5 Azure Functions app.
 
 #### NuGet.Config
 
@@ -72,7 +72,7 @@ There are some main differences between a .NET 5 Azure Functions project compare
 </PropertyGroup>
 ```
 
-Also note the packages needed for the .NET 5 worker. You can use other .NET 5 compatible packages in your project.
+Also note the package references needed for the .NET 5 worker. You can use other .NET 5 compatible packages in your project.
 
 For functions attributes to work, you also need to reference the appropriate WebJobs SDK packages that contain the required types.
 
@@ -95,13 +95,67 @@ One important difference with .NET 5 functions is that "rich bindings", such as 
 
 ### Attaching the debugger
 
+We are working with the Visual Studio and VS Code teams to add support for debugging and deployment. For now, follow these instructions to debug an app.
+
 #### VS Code
 
-In the "Run" icon in the Activity Bar. The `.NET Core Attach` launch task should be selected. **With the function app running**, start the `.NET Core Attach` task. It will prompt you for a process to attach to. Select the `dotnet` process running `FunctionApp.dll`.
+In the "Run" icon in the Activity Bar. The `.NET Core Attach` launch task should be selected. **With the function app running**, start the `.NET Core Attach` launch configuration. It will prompt you for a process to attach to. Select the `dotnet` process running `FunctionApp.dll`.
 
 #### Visual Studio
 
 To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Program.cs*. The process will attempt to launch a debugger before continuing.
+
+## Deploying to Azure
+
+*Coming soon. Please chech back for details.*
+
+<!-- not working right now
+
+
+### Create the Azure resources
+
+1. To deploy the app, first ensure that you've installed the Azure CLI. 
+
+1. Login to the CLI.
+
+    ```bash
+    az login
+    ```
+
+1. If necessary, use `az account set` to select the subscription you want to use.
+  
+1. Create a resource group, Storage account, and Azure Functions app.
+
+    ```bash
+    az group create --name AzureFunctionsQuickstart-rg --location westeurope
+    az storage account create --name <STORAGE_NAME> --location westeurope --resource-group AzureFunctionsQuickstart-rg --sku Standard_LRS
+    az functionapp create --resource-group AzureFunctionsQuickstart-rg --consumption-plan-location westeurope --runtime dotnet --functions-version 3 --name <APP_NAME> --storage-account <STORAGE_NAME>
+    ```
+
+1. Currently, the function app needs to first be created as .NET Core 3.1. Change the .NET version to `v5.0`.
+
+    ```bash
+  az functionapp config set --net-framework-version "v5.0" --resource-group AzureFunctionsQuickstart-rg --name <APP_NAME>
+    ```
+
+### Deploying the app
+
+1. Ensure you're in the `FunctionApp` folder.
+
+1. Deploy the app.
+
+    ```bash
+    func azure functionapp publish <APP_NAME> --csharp --force
+    ```
+
+1. Set the function app settings.
+
+    ```bash
+    az functionapp config appsettings set --settings "FUNCTIONS_WORKER_RUNTIME=dotnet5" "languageWorkers:dotnet5:workerDirectory=." --resource-group AzureFunctionsQuickstart-rg --name <APP_NAME>
+    ```
+
+
+-->
 
 ## Contributing
 
