@@ -89,8 +89,12 @@ One important difference with .NET 5 functions is that "rich bindings", such as 
 
 ### Run the sample locally
 
-- Go to the function app directory - `cd FunctionApp`
-- Run `func host start --csharp` [Optional `--verbose`]. This will preform a build and then run the host.
+In the `FunctionApp` folder, run `func host start --csharp` [Optional `--verbose`]. This will preform a build and then run the host.
+
+```bash
+cd FunctionApp
+func host start --csharp --verbose
+```
 
 ### Attaching the debugger
 
@@ -100,7 +104,7 @@ We are working with the Visual Studio and VS Code teams to add support for debug
 
 In the "Run" icon in the Activity Bar. The `.NET Core Attach` launch task should be selected. **With the function app running**, start the `.NET Core Attach` launch configuration. It will prompt you for a process to attach to. Select the `dotnet` process running `FunctionApp.dll`.
 
-Ensure you have the C# extension for VS Code installed.
+Ensure you have the C# extension for VS Code installed. For the `.NET Core Attach` launch config to appear, open VS Code at the repository root where the launch config is defined.
 
 #### Visual Studio
 
@@ -108,7 +112,7 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
 
 ## Deploying to Azure
 
-*Coming soon. Please chech back for details.*
+*Coming soon. Please check back for details.*
 
 <!-- not working right now
 
