@@ -47,7 +47,6 @@ During the private preview, the .NET worker packages are published in a MyGet fe
   <packageSources>
     <add key="nuget.org" value="https://www.nuget.org/api/v2/" />
     <add key="azure_app_service" value="https://www.myget.org/F/azure-appservice/api/v2" />
-    ...
   </packageSources>
 </configuration>
 ```
@@ -100,6 +99,8 @@ We are working with the Visual Studio and VS Code teams to add support for debug
 #### VS Code
 
 In the "Run" icon in the Activity Bar. The `.NET Core Attach` launch task should be selected. **With the function app running**, start the `.NET Core Attach` launch configuration. It will prompt you for a process to attach to. Select the `dotnet` process running `FunctionApp.dll`.
+
+Ensure you have the C# extension for VS Code installed.
 
 #### Visual Studio
 
