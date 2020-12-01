@@ -114,9 +114,6 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
 
 *Coming soon. Please check back for details.*
 
-<!-- not working right now
-
-
 ### Create the Azure resources
 
 1. To deploy the app, first ensure that you've installed the Azure CLI. 
@@ -153,14 +150,12 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
     func azure functionapp publish <APP_NAME> --csharp --force
     ```
 
-1. Set the function app settings.
+1. Using `--force` currently sets `FUNCTIONS_WORKER_RUNTIME` to an incorrect value. Run the following command to configure the correct function app settings.
 
     ```bash
     az functionapp config appsettings set --settings "FUNCTIONS_WORKER_RUNTIME=dotnet5" "languageWorkers:dotnet5:workerDirectory=." --resource-group AzureFunctionsQuickstart-rg --name <APP_NAME>
     ```
 
-
--->
 
 ## Feedback
 
