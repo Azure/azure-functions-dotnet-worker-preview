@@ -137,7 +137,7 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
 1. Currently, the function app needs to first be created as .NET Core 3.1. Change the .NET version to `v5.0`.
 
     ```bash
-  az functionapp config set --net-framework-version "v5.0" --resource-group AzureFunctionsQuickstart-rg --name <APP_NAME>
+    az functionapp config set --net-framework-version "v5.0" --resource-group AzureFunctionsQuickstart-rg --name <APP_NAME>
     ```
 
 ### Deploying the app
