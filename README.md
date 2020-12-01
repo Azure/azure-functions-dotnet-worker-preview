@@ -153,9 +153,10 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
 1. Using `--force` currently sets `FUNCTIONS_WORKER_RUNTIME` to an incorrect value. Run the following command to configure the correct function app settings.
 
     ```bash
-    az functionapp config appsettings set --settings "FUNCTIONS_WORKER_RUNTIME=dotnet5" "languageWorkers:dotnet5:workerDirectory=." --resource-group AzureFunctionsQuickstart-rg --name <APP_NAME>
+    az functionapp config appsettings set --settings "FUNCTIONS_WORKER_RUNTIME=dotnet5" "languageWorkers:dotnet5:workerDirectory=d:\\home\\site\\wwwroot" --resource-group AzureFunctionsQuickstart-rg --name <APP_NAME>
     ```
 
+    Note that depending on your shell, you may need to escape backslashes `\` differently.
 
 ## Feedback
 
