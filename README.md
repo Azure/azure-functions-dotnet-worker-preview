@@ -120,7 +120,19 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
 
 1. Ensure you're in your functions project (`FunctionApp`) folder.
 
-2. Deploy the app.
+2. Publish the .NET project.
+
+   ```bash
+   dotnet publish -c Release
+   ```
+
+3. Cd into the publish artifacts.
+
+   ```bash
+   cd ./bin/Release/net5.0/publish
+   ```
+
+4. Deploy the app.
 
     ```bash
     func azure functionapp publish <APP_NAME>
