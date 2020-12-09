@@ -1,5 +1,13 @@
 # Azure Functions .NET 5 support
 
+Welcome to a preview of .NET 5 in Azure Functions. .NET 5 functions run in an out-of-process language worker that is separate from the Azure Functions runtime. This allows you to have full control over your application's dependencies as well as other new features like a middleware pipeline.
+
+A .NET 5 function app works differently than a .NET Core 3.1 function app. For .NET 5, you build an executable that imports the .NET 5 language worker as a NuGet package. Your app includes a `Program.cs` that starts the worker.
+
+If you've built .NET Core 3.1 Azure Functions before, the rest of a .NET 5 Azure Functions app should look quite familiar. Refer to the information in this README for how to get started and for more details about the main differences.
+
+As this is a preview, there may be some breaking changes to be expected.
+
 ## How to run the sample
 
 ### Install .NET 5.0
@@ -8,15 +16,13 @@ Download .NET 5.0 [from here](https://dotnet.microsoft.com/download/dotnet/5.0)
 ### Install the Azure Functions Core Tools
 Please make sure you have Azure Functions Core Tools >= `3.0.3160`.
 
-To download using `npm`, you can run  `npm i -g azure-functions-core-tools@3 --unsafe-perm true`.
+To download, please check out our docs at [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools)
 
-For other ways to download, please check out our docs at [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools)
+### FunctionApp folder structure
 
-### Add local settings file
+Here are the important artifacts in a .NET 5 Azure Functions app (`FunctionApp` folder).
 
-In the `FunctionApp` folder, create a file named `local.settings.json` and add the following content.
-
-#### FunctionApp/local.settings.json
+#### local.settings.json
 
 ```json
 {
@@ -31,11 +37,7 @@ In the `FunctionApp` folder, create a file named `local.settings.json` and add t
 * `FUNCTIONS_WORKER_RUNTIME` - Set this to a value of `dotnet-isolated`. This is likely to change in the future as this worker is intended for future .NET versions as well.
 * `AzureWebJobsStorage` - Some of the functions in the sample require a Storage account. Set the value of `AzureWebJobsStorage` to the connection string to a valid Storage account or running Storage Emulator.
 
-### FunctionApp folder structure
-
-Here are the important artifacts in a .NET 5 Azure Functions app.
-
-### FunctionApp.csproj
+#### FunctionApp.csproj
 
 There are some main differences between a .NET 5 Azure Functions project compared to .NET Core 3.1.
 
@@ -57,11 +59,11 @@ Also note the package references needed for the .NET 5 worker. You can use other
 
 For functions attributes to work, you also need to reference the appropriate WebJobs SDK packages that contain the required types.
 
-### Functions
+#### Functions
 
 Like .NET Core 3.1 function apps, functions are in C# files. They are currently separated into folders but, like .NET Core 3.1 functions, they can be organized differently if you wish.
 
-One important difference with .NET 5 functions is that "rich bindings", such as binding to a Cosmos DB client, are not supported. Use strings and C# objects (POCOs). For HTTP, use `HttpRequestData` and `HttpResponseData` objects.
+One important difference with .NET 5 functions is that "rich bindings", such as Durable Functions or binding to SDK types like Cosmos DB client, are not supported. Use strings and C# objects (POCOs). For HTTP, use `HttpRequestData` and `HttpResponseData` objects.
 
 * `Function1` - An HTTP trigger with a Blob input and a Queue output.
 * `Function2` - A Queue trigger with a Blob input.
@@ -94,8 +96,6 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
 
 ## Deploying to Azure
 
-*Coming soon. Please check back for details.*
-
 ### Create the Azure resources
 
 1. To deploy the app, first ensure that you've installed the Azure CLI. 
@@ -116,7 +116,7 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
     az functionapp create --resource-group AzureFunctionsQuickstart-rg --consumption-plan-location westeurope --runtime dotnet --functions-version 3 --name <APP_NAME> --storage-account <STORAGE_NAME>
     ```
 
-### Deploying the app
+### Deploy the app
 
 1. Ensure you're in your functions project (`FunctionApp`) folder.
 
@@ -137,6 +137,10 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
     ```bash
     func azure functionapp publish <APP_NAME>
     ```
+
+## Known issues
+
+* When building the app, you may see a warnings like `warning NU1608: Detected package version outside of dependency constraint: Microsoft.CodeAnalysis.CSharp.Workspaces 3.3.1 requires Microsoft.CodeAnalysis.Common (= 3.3.1) but version Microsoft.CodeAnalysis.Common 3.8.0 was resolved.`. It is safe to ignore those while we work on removing them in a future release.
 
 ## Feedback
 
