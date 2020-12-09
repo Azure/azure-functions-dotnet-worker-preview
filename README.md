@@ -2,7 +2,7 @@
 
 Welcome to a preview of .NET 5 in Azure Functions. .NET 5 functions run in an out-of-process language worker that is separate from the Azure Functions runtime. This allows you to have full control over your application's dependencies as well as other new features like a middleware pipeline.
 
-A .NET 5 function app works differently than a .NET Core 3.1 function app. For .NET 5, you build an executable that imports the .NET 5 language worker as a NuGet package. Your app includes a `Program.cs` that starts the worker.
+A .NET 5 function app works differently than a .NET Core 3.1 function app. For .NET 5, you build an executable that imports the .NET 5 language worker as a NuGet package. Your app includes a [`Program.cs`](FunctionApp/Program.cs) that starts the worker.
 
 If you've built .NET Core 3.1 Azure Functions before, the rest of a .NET 5 Azure Functions app should look quite familiar. Refer to the information in this README for how to get started and for more details about the main differences.
 
@@ -137,11 +137,7 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
     ```bash
     func azure functionapp publish <APP_NAME>
     ```
-
-## Known issues
-
-* When building the app, you may see a warnings like `warning NU1608: Detected package version outside of dependency constraint: Microsoft.CodeAnalysis.CSharp.Workspaces 3.3.1 requires Microsoft.CodeAnalysis.Common (= 3.3.1) but version Microsoft.CodeAnalysis.Common 3.8.0 was resolved.`. It is safe to ignore those while we work on removing them in a future release.
-
+    
 ## Feedback
 
 Please create issues in this repo. Thanks!
