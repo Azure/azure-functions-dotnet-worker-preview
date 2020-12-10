@@ -138,6 +138,10 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
     func azure functionapp publish <APP_NAME>
     ```
     
+## Known issues
+
+* Deployment is currently limited to Windows. Note that some optimizations are not in place in the consumption plan and you may experience longer cold starts.
+
 ## Feedback
 
 Please create issues in this repo. Thanks!
