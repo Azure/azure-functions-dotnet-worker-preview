@@ -140,7 +140,7 @@ To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Prog
     
 ## Known issues
 
-* Deployment is currently limited to Windows. Note that some optimizations are not in place in the consumption plan and you may experience longer cold starts.
+* Deployment to Azure is currently limited to Windows plans. Note that some optimizations are not in place in the consumption plan and you may experience longer cold starts.
 
 ## Feedback
 
