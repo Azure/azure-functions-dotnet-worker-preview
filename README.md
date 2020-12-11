@@ -90,6 +90,8 @@ Ensure version 1.1.0 or later of the [Azure Functions VS Code extension](https:/
 
 To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Program.cs*. The process will attempt to launch a debugger before continuing.
 
+We're working with the Visual Studio team to provide an integrated debugging experience.
+
 ## Deploying to Azure
 
 ### Create the Azure resources
