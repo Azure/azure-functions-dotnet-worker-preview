@@ -82,17 +82,15 @@ func host start --verbose
 
 ### Attaching the debugger
 
-We are working with the Visual Studio and VS Code teams to add support for debugging and deployment. For now, follow these instructions to debug an app.
-
 #### VS Code
 
-In the "Run" icon in the Activity Bar. The `.NET Core Attach` launch task should be selected. **With the function app running**, start the `.NET Core Attach` launch configuration. It will prompt you for a process to attach to. Select the `dotnet` process running `FunctionApp.dll` (your functions project dll).
-
-Ensure you have the C# extension for VS Code installed. For the `.NET Core Attach` launch config to appear, open VS Code at the repository root where the launch config is defined.
+Ensure version 1.1.0 or later of the [Azure Functions VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) is installed and you have this repo open at the root. In the "Run" icon in the Activity Bar, select the `Attach to .NET Functions` launch task and click the "Start Debugging" button or press `F5`. The app will start and the debugger will attach.
 
 #### Visual Studio
 
 To debug in Visual Studio, uncomment the `Debugger.Launch()` statements in *Program.cs*. The process will attempt to launch a debugger before continuing.
+
+We're working with the Visual Studio team to provide an integrated debugging experience.
 
 ## Deploying to Azure
 
