@@ -75,7 +75,7 @@ One important difference with .NET 5 functions is that "rich bindings", such as 
 
 The Azure Functions .NET Worker supports middleware registration, following a model similar to what exists in ASP.NET and giving you the ability to inject logic into the invocation pipeline, pre and post function executions.
 
-While the full middleware registration set of APIs is not yet exposed, middleware registration is supported and we've added an example to the sample application under the `Middleware` folder.
+While the full middleware registration set of APIs is not yet exposed, middleware registration is supported and we've added an [example](https://github.com/Azure/azure-functions-dotnet-worker-preview/tree/main/FunctionApp/Middleware) to the sample application under the `Middleware` folder.
 
 ### Run the sample locally
 
