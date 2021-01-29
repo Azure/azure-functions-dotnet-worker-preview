@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Azure.Functions.Worker.Configuration;
+using FunctionApp.Middleware;
 
 namespace FunctionApp
 {
@@ -21,6 +22,7 @@ namespace FunctionApp
                 })
                 .ConfigureFunctionsWorker((c, b) =>
                 {
+                    b.UseSampleMiddleware();
                     b.UseFunctionExecutionMiddleware();
                 })
                 .ConfigureServices(s =>
