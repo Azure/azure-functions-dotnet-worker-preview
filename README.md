@@ -71,6 +71,12 @@ One important difference with .NET 5 functions is that "rich bindings", such as 
 * `Function4` - A simple HTTP trigger.
 * `Function5` - An HTTP triggered function that demonstrates dependency injection.
 
+#### Middleware
+
+The Azure Functions .NET Worker supports middleware registration, following a model similar to what exists in ASP.NET and giving you the ability to inject logic into the invocation pipeline, pre and post function executions.
+
+While the full middleware registration set of APIs is not yet exposed, middleware registration is supported and we've added an example to the sample application under the `Middleware` folder.
+
 ### Run the sample locally
 
 In the `FunctionApp` folder, run `func host start` [Optional `--verbose`]. This will preform a build and then run the host.
