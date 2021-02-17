@@ -1,15 +1,17 @@
 ﻿using System;
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.Functions.Worker.Extensions.Abstractions;
+using Microsoft.Azure.Functions.Worker.Extensions.Storage;
 
 namespace FunctionApp
 {
     public static class Function2
     {
-        [FunctionName("Function2")]
+        [Function("Function2")]
         public static Book Run([QueueTrigger("functionstesting2", Connection = "AzureWebJobsStorage")] Book myQueueItem,
-            [Blob("test-samples/sample1.txt", Connection = "AzureWebJobsStorage")] string myBlob)
+            [BlobInput("test-samples/sample1.txt", Connection = "AzureWebJobsStorage")] string myBlob)
         {
             Console.WriteLine(myBlob);
+
             return myQueueItem;
         }
     }
