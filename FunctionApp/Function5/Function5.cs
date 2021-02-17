@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker.Pipeline;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Converters;
 
 namespace FunctionApp
 {
@@ -48,8 +52,32 @@ namespace FunctionApp
             headers.Add("Content", "Content - Type: text / html; charset = utf - 8");
 
             response.Headers = headers;
-            response.Body = "Welcome to .NET 5!!";
 
+            var responseBuilder = new StringBuilder();
+
+            responseBuilder.AppendLine($"Method: {httpRequest.Method}");
+            responseBuilder.AppendLine($"Request URL: {httpRequest.Url}");
+            responseBuilder.AppendLine($"Original request: {httpRequest.ReadAsString()}");
+            responseBuilder.AppendLine($"Headers:");
+            foreach (var item in httpRequest.Headers)
+            {
+                responseBuilder.AppendLine($"\t{item.Key} = {item.Value}");
+            }
+
+            responseBuilder.AppendLine($"Identities:");
+            foreach (var item in httpRequest.Identities)
+            {
+                responseBuilder.AppendLine($"\tAuth type: {item.AuthenticationType}");
+
+                responseBuilder.AppendLine($"\tClaims:");
+                foreach (var claim in item.Claims)
+                {
+                    responseBuilder.AppendLine($"\t\tType: {claim.Type}, Value: {claim.Value}");
+
+                }
+            }
+
+            response.Body = responseBuilder.ToString();
             return response;
         }
     }
