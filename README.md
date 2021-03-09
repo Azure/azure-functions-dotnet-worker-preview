@@ -1,4 +1,4 @@
-**Note: This repo is being archived. Please visit https://github.com/Azure/azure-functions-dotnet-worker instead to try out the latest samples, and report issues.**
+**Note: This repository is archived. Please visit https://github.com/Azure/azure-functions-dotnet-worker instead to try out the latest samples, and report issues.**
 
 # Azure Functions .NET 5 support
 
