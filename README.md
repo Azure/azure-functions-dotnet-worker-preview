@@ -1,3 +1,5 @@
+**Note: This repository is archived. Please visit https://github.com/Azure/azure-functions-dotnet-worker instead to try out the latest samples, and report issues.**
+
 # Azure Functions .NET 5 support
 
 Welcome to a preview of .NET 5 in Azure Functions. .NET 5 functions run in an out-of-process language worker that is separate from the Azure Functions runtime. This allows you to have full control over your application's dependencies as well as other new features like a middleware pipeline.
