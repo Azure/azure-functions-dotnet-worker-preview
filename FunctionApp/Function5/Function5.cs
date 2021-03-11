@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Extensions.Abstractions;
+using Microsoft.Azure.Functions.Worker.Extensions.Http;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Azure.Functions.Worker.Pipeline;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Converters;
 
@@ -21,11 +18,11 @@ namespace FunctionApp
             _responderService = responderService;
         }
 
-        [FunctionName(nameof(Function5))]
+        [Function(nameof(Function5))]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
-            FunctionExecutionContext executionContext)
+            FunctionContext executionContext)
         {
-            var logger = executionContext.Logger;
+            var logger = executionContext.GetLogger<Function5>();
             logger.LogInformation("message logged");
 
             return _responderService.ProcessRequest(req);
@@ -46,12 +43,11 @@ namespace FunctionApp
 
         public HttpResponseData ProcessRequest(HttpRequestData httpRequest)
         {
-            var response = new HttpResponseData(HttpStatusCode.OK);
-            var headers = new Dictionary<string, string>();
-            headers.Add("Date", "Mon, 18 Jul 2016 16:06:00 GMT");
-            headers.Add("Content", "Content - Type: text / html; charset = utf - 8");
+            var response = httpRequest.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Date", "Mon, 18 Jul 2016 16:06:00 GMT");
+            response.Headers.Add("Content", "Content - Type: text / html; charset = utf - 8");
 
-            response.Headers = headers;
+            response.Cookies.Append("dotnetworker", "delicious cookie");
 
             var responseBuilder = new StringBuilder();
 
@@ -61,7 +57,7 @@ namespace FunctionApp
             responseBuilder.AppendLine($"Headers:");
             foreach (var item in httpRequest.Headers)
             {
-                responseBuilder.AppendLine($"\t{item.Key} = {item.Value}");
+                responseBuilder.AppendLine($"\t{item.Key} = {string.Join(",", item.Value)}");
             }
 
             responseBuilder.AppendLine($"Identities:");
@@ -73,11 +69,10 @@ namespace FunctionApp
                 foreach (var claim in item.Claims)
                 {
                     responseBuilder.AppendLine($"\t\tType: {claim.Type}, Value: {claim.Value}");
-
                 }
             }
-
-            response.Body = responseBuilder.ToString();
+            
+            response.WriteString(responseBuilder.ToString());
             return response;
         }
     }
